@@ -26,10 +26,18 @@
 
   <main id="app" class="app-shell">
     <header class="form-header">
-      <div class="brand-lockup">
+      <!-- <div class="brand-lockup">
         <img class="brand-logo" src="assets/logo-cafsa.png" alt="Grupo Financiero CAFSA S.A." width="216" height="84">
-        <!-- <p class="eyebrow">Grupo Financiero CAFSA S.A.</p> -->
+      </div> -->
+
+      <div class="brand-banner" aria-label="Identidad de marca CAFSA">
+        <img
+          src="assets/logo-cafsa.png"
+          alt="Grupo Financiero CAFSA"
+          class="brand-logo"
+        >
       </div>
+
       <h1>Actualización de Datos</h1>
       <p class="form-description">
         Formulario para mantener actualizada la base de datos y garantizar la continuidad de los servicios.
@@ -136,7 +144,7 @@
             aria-describedby="numeroIdentificacion-help numeroIdentificacion-error"
           >
           <small id="numeroIdentificacion-help" class="help-text">
-            Formatos aceptados: cédula '0-0000-0000', DIMEX, residencia '0-0000-0000-0000' o pasaporte PA-000000.
+            Cédula '0-0000-0000', DIMEX, Residencia '0-0000-0000-0000' o Pasaporte PA-000000.
           </small>
           <span class="error-message" id="numeroIdentificacion-error" role="alert" aria-live="polite"></span>
         </div>

@@ -21,10 +21,5 @@ const CONFIG = Object.freeze({
   ENABLE_DIRECT_OCR: false
 });
 
-if (typeof window !== 'undefined') {
-  window.CONFIG = CONFIG;
-}
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = CONFIG;
-}
+if (typeof window !== 'undefined') window.CONFIG = CONFIG;
+if (typeof module !== 'undefined' && module.exports) module.exports = CONFIG;

@@ -214,11 +214,28 @@
     margin-block-end: var(--space-lg);
   }
 
-  .brand-logo {
+  /* .brand-logo {
     inline-size: min(32rem, 92vw);
     block-size: auto;
     object-fit: contain;
-    /* margin-right: 10%; */
+  } */
+   .brand-banner {
+    display: grid;
+    place-items: center;
+    min-block-size: 8rem;
+    margin-block-end: var(--space-lg);
+    padding: 1rem;
+    border-radius: calc(var(--radius-lg) + 0.2rem);
+    background: #f8fafc;
+    /* background: var(--color-backg-box); */
+    /* color-backg-box */
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+  }
+  .brand-logo {
+    inline-size: min(100%, 28rem);
+    block-size: auto;
+    object-fit: contain;
   }
 
   .eyebrow {
@@ -304,6 +321,8 @@
   legend {
     padding: var(--space-2xs) var(--space-sm);
     background: var(--color-backg-text);
+    /* background: var(--color-text-muted); */
+    
     border: 1px solid rgb(36 84 143 / 0.16);
     border-radius: 999px;
     font-size: var(--font-size-xs);

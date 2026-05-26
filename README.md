@@ -16,16 +16,6 @@ Proyecto actualizado del formulario de actualización de datos de Grupo Financie
 
 No abra el archivo con doble clic porque `file://` limita el comportamiento del navegador. Ejecute:
 
-```powershell
-python -m http.server 8080
-```
-
-Luego abra:
-
-```text
-http://localhost:8080
-```
-
 ## OCR / autocompletado
 
 El archivo original `config.js` traía un endpoint de OCR directo con firma/token. En esta versión se dejó `OCR_SERVICE_URL` vacío por seguridad, porque el repositorio será público.
@@ -37,21 +27,6 @@ Frontend: AWS Amplify Hosting o CloudFront
 Backend: API Gateway + Lambda
 OCR: Amazon Textract o proxy controlado hacia Power Automate
 Almacenamiento: S3 privado con cifrado
-```
-
-## Publicación en AWS Amplify
-
-1. Suba el proyecto a GitHub.
-2. En AWS Amplify, conecte el repositorio.
-3. Seleccione la rama correspondiente.
-4. Amplify leerá `amplify.yml`.
-5. Configure encabezados con `customHttp.yml`.
-
-## Pruebas
-
-```powershell
-npm install
-npm test
 ```
 
 ## Seguridad
