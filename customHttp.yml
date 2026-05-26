@@ -1,0 +1,45 @@
+# AWS Amplify Hosting - Custom HTTP Headers
+# Ubicación requerida: raíz del repositorio/proyecto.
+# Ajustar connect-src cuando se defina el endpoint real del API Gateway/Lambda o backend autorizado.
+
+customHeaders:
+  - pattern: '**/*'
+    headers:
+      - key: Strict-Transport-Security
+        value: max-age=31536000; includeSubDomains
+      - key: Content-Security-Policy
+        value: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://*.execute-api.us-east-1.amazonaws.com; form-action 'self'; upgrade-insecure-requests
+      - key: X-Content-Type-Options
+        value: nosniff
+      - key: X-Frame-Options
+        value: DENY
+      - key: Referrer-Policy
+        value: strict-origin-when-cross-origin
+      - key: Permissions-Policy
+        value: camera=(), microphone=(), geolocation=(), payment=(), usb=(), fullscreen=(self)
+      - key: Cross-Origin-Opener-Policy
+        value: same-origin
+      - key: Cross-Origin-Resource-Policy
+        value: same-origin
+      - key: X-Permitted-Cross-Domain-Policies
+        value: none
+
+  - pattern: '**/*.html'
+    headers:
+      - key: Cache-Control
+        value: no-cache, no-store, must-revalidate
+
+  - pattern: '**/*.css'
+    headers:
+      - key: Cache-Control
+        value: public, max-age=86400
+
+  - pattern: '**/*.js'
+    headers:
+      - key: Cache-Control
+        value: public, max-age=86400
+
+  - pattern: 'assets/**'
+    headers:
+      - key: Cache-Control
+        value: public, max-age=604800
