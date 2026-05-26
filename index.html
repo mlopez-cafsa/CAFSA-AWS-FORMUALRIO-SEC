@@ -13,33 +13,28 @@
 
   <link rel="preload" href="css/styles.css" as="style">
   <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Mantener estos archivos locales en AWS Amplify/S3/CloudFront.
+       Si app.js depende de config.js y location-data.js, defer conserva el orden. -->
   <script src="js/config.js" defer></script>
+  <script src="js/location-data.js" defer></script>
   <script src="js/app.js" defer></script>
 </head>
+
 <body>
   <a class="skip-link" href="#solicitudForm">Saltar al formulario</a>
 
   <main id="app" class="app-shell">
-    <noscript>
-      <div class="submit-error" role="alert">
-        Este formulario requiere JavaScript habilitado para validar la carga del documento y enviar la solicitud de forma segura.
-      </div>
-    </noscript>
     <header class="form-header">
-      <div class="brand-banner" aria-label="Identidad de marca CAFSA">
-        <img src="assets/logo-cafsa.png" alt="Grupo Financiero CAFSA" class="brand-logo">
+      <div class="brand-lockup">
+        <img class="brand-logo" src="assets/logo-cafsa.png" alt="Grupo Financiero CAFSA S.A." width="216" height="84">
+        <p class="eyebrow">Grupo Financiero CAFSA S.A.</p>
       </div>
-
-      <p class="eyebrow">Grupo Financiero CAFSA S.A.</p>
       <h1>Actualización de Datos</h1>
       <p class="form-description">
-        Formulario para mantener actualizada su información y garantizar la continuidad de los servicios.
+        Formulario para mantener actualizada la base de datos y garantizar la continuidad de los servicios.
       </p>
     </header>
-
-    <aside id="localWarning" class="local-warning" hidden role="status" aria-live="polite">
-      Está visualizando el formulario desde <strong>file://</strong>. Para pruebas locales use un servidor HTTP local; en AWS se publicará por HTTPS.
-    </aside>
 
     <section id="step1-upload" class="step-section" aria-labelledby="step1-title">
       <fieldset>
@@ -68,7 +63,7 @@
               </svg>
             </span>
             <span class="file-upload-text">
-              Arrastre su archivo aquí o <span class="file-upload-link">haga clic para abrir el explorador</span>
+              Arrastre su archivo aquí o <span class="file-upload-link">haga clic para seleccionar</span>
             </span>
             <span class="file-upload-hint">Solo PDF • Máximo 10 MB</span>
           </label>
@@ -93,7 +88,7 @@
 
         <div class="ocr-status" id="ocr-status" hidden aria-live="polite" aria-busy="true">
           <span class="spinner-sm" aria-hidden="true"></span>
-          <span>Procesando documento, por favor espere...</span>
+          <span>Extrayendo datos del documento, por favor espere...</span>
         </div>
 
         <div class="ocr-error" id="ocr-error" hidden role="alert" aria-live="assertive">
@@ -108,11 +103,9 @@
     <form
       id="solicitudForm"
       class="data-form"
-      action="#"
       method="post"
       enctype="multipart/form-data"
       autocomplete="on"
-      data-api-endpoint=""
       novalidate
       aria-labelledby="form-title"
       hidden
@@ -150,28 +143,84 @@
 
         <div class="form-grid">
           <div class="form-group">
-            <label for="nombre">Nombre <span class="required" aria-hidden="true">*</span></label>
-            <input type="text" id="nombre" name="nombre" required minlength="2" maxlength="50" autocomplete="given-name" autocapitalize="words" placeholder="Nombre" aria-describedby="nombre-error">
+            <label for="nombre">
+              Nombre
+              <span class="required" aria-hidden="true">*</span>
+              <span class="visually-hidden">campo requerido</span>
+            </label>
+            <input
+              type="text"
+              id="nombre"
+              name="nombre"
+              required
+              minlength="2"
+              maxlength="50"
+              autocomplete="given-name"
+              autocapitalize="words"
+              placeholder="Nombre"
+              aria-describedby="nombre-error"
+            >
             <span class="error-message" id="nombre-error" role="alert" aria-live="polite"></span>
           </div>
 
           <div class="form-group">
-            <label for="primerApellido">Primer apellido <span class="required" aria-hidden="true">*</span></label>
-            <input type="text" id="primerApellido" name="primerApellido" required minlength="2" maxlength="50" autocomplete="family-name" autocapitalize="words" placeholder="Primer apellido" aria-describedby="primerApellido-error">
+            <label for="primerApellido">
+              Primer apellido
+              <span class="required" aria-hidden="true">*</span>
+              <span class="visually-hidden">campo requerido</span>
+            </label>
+            <input
+              type="text"
+              id="primerApellido"
+              name="primerApellido"
+              required
+              minlength="2"
+              maxlength="50"
+              autocomplete="family-name"
+              autocapitalize="words"
+              placeholder="Primer apellido"
+              aria-describedby="primerApellido-error"
+            >
             <span class="error-message" id="primerApellido-error" role="alert" aria-live="polite"></span>
           </div>
         </div>
 
         <div class="form-grid">
           <div class="form-group">
-            <label for="segundoApellido">Segundo apellido <span class="required" aria-hidden="true">*</span></label>
-            <input type="text" id="segundoApellido" name="segundoApellido" required minlength="2" maxlength="50" autocomplete="additional-name" autocapitalize="words" placeholder="Segundo apellido" aria-describedby="segundoApellido-error">
+            <label for="segundoApellido">
+              Segundo apellido
+              <span class="required" aria-hidden="true">*</span>
+              <span class="visually-hidden">campo requerido</span>
+            </label>
+            <input
+              type="text"
+              id="segundoApellido"
+              name="segundoApellido"
+              required
+              minlength="2"
+              maxlength="50"
+              autocomplete="additional-name"
+              autocapitalize="words"
+              placeholder="Segundo apellido"
+              aria-describedby="segundoApellido-error"
+            >
             <span class="error-message" id="segundoApellido-error" role="alert" aria-live="polite"></span>
           </div>
 
           <div class="form-group">
-            <label for="fechaVencimientoDocumento">Fecha de vencimiento del documento <span class="required" aria-hidden="true">*</span></label>
-            <input type="date" id="fechaVencimientoDocumento" name="fechaVencimientoDocumento" required autocomplete="off" aria-describedby="fechaVencimientoDocumento-error">
+            <label for="fechaVencimientoDocumento">
+              Fecha de vencimiento del documento
+              <span class="required" aria-hidden="true">*</span>
+              <span class="visually-hidden">campo requerido</span>
+            </label>
+            <input
+              type="date"
+              id="fechaVencimientoDocumento"
+              name="fechaVencimientoDocumento"
+              required
+              autocomplete="off"
+              aria-describedby="fechaVencimientoDocumento-error"
+            >
             <span class="error-message" id="fechaVencimientoDocumento-error" role="alert" aria-live="polite"></span>
           </div>
         </div>
@@ -182,15 +231,45 @@
 
         <div class="form-grid">
           <div class="form-group">
-            <label for="email">Correo electrónico <span class="required" aria-hidden="true">*</span></label>
-            <input type="email" id="email" name="email" required inputmode="email" autocomplete="email" spellcheck="false" placeholder="correo@dominio.com" aria-describedby="email-error">
+            <label for="email">
+              Correo electrónico
+              <span class="required" aria-hidden="true">*</span>
+              <span class="visually-hidden">campo requerido</span>
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              inputmode="email"
+              autocomplete="email"
+              spellcheck="false"
+              placeholder="correo@dominio.com"
+              aria-describedby="email-error"
+            >
             <span class="error-message" id="email-error" role="alert" aria-live="polite"></span>
           </div>
 
           <div class="form-group">
-            <label for="numeroTelefono">Número de teléfono <span class="required" aria-hidden="true">*</span></label>
-            <input type="tel" id="numeroTelefono" name="numeroTelefono" required inputmode="numeric" pattern="[0-9]{8}" minlength="8" maxlength="8" autocomplete="tel-national" placeholder="88887777" aria-describedby="numeroTelefono-help numeroTelefono-error">
-            <small id="numeroTelefono-help" class="help-text">Ingrese 8 dígitos, sin espacios ni guiones.</small>
+            <label for="numeroTelefono">
+              Número de teléfono
+              <span class="required" aria-hidden="true">*</span>
+              <span class="visually-hidden">campo requerido</span>
+            </label>
+            <input
+              type="tel"
+              id="numeroTelefono"
+              name="numeroTelefono"
+              required
+              inputmode="numeric"
+              autocomplete="tel-national"
+              pattern="[0-9]{8}"
+              minlength="8"
+              maxlength="8"
+              placeholder="88888888"
+              aria-describedby="numeroTelefono-help numeroTelefono-error"
+            >
+            <small id="numeroTelefono-help" class="help-text">Ingrese 8 dígitos sin guiones ni espacios.</small>
             <span class="error-message" id="numeroTelefono-error" role="alert" aria-live="polite"></span>
           </div>
         </div>
@@ -203,9 +282,13 @@
 
         <div class="form-grid">
           <div class="form-group">
-            <label for="provincia">Provincia <span class="required" aria-hidden="true">*</span></label>
-            <select id="provincia" name="provincia" required aria-describedby="provincia-error">
-              <option value="">-- Seleccione una provincia --</option>
+            <label for="provincia">
+              Provincia
+              <span class="required" aria-hidden="true">*</span>
+              <span class="visually-hidden">campo requerido</span>
+            </label>
+            <select id="provincia" name="provincia" required autocomplete="address-level1" aria-describedby="provincia-error">
+              <option value="">Seleccione una provincia</option>
               <option value="SJ">San José</option>
               <option value="AL">Alajuela</option>
               <option value="CA">Cartago</option>
@@ -218,22 +301,49 @@
           </div>
 
           <div class="form-group">
-            <label for="canton">Cantón <span class="required" aria-hidden="true">*</span></label>
-            <input type="text" id="canton" name="canton" required placeholder="Cantón" aria-describedby="canton-error">
+            <label for="canton">
+              Cantón
+              <span class="required" aria-hidden="true">*</span>
+              <span class="visually-hidden">campo requerido</span>
+            </label>
+            <select id="canton" name="canton" required disabled autocomplete="address-level2" aria-describedby="canton-error">
+              <option value="">Seleccione un cantón</option>
+            </select>
             <span class="error-message" id="canton-error" role="alert" aria-live="polite"></span>
           </div>
         </div>
 
         <div class="form-grid">
           <div class="form-group">
-            <label for="distrito">Distrito <span class="required" aria-hidden="true">*</span></label>
-            <input type="text" id="distrito" name="distrito" required placeholder="Distrito" aria-describedby="distrito-error">
+            <label for="distrito">
+              Distrito
+              <span class="required" aria-hidden="true">*</span>
+              <span class="visually-hidden">campo requerido</span>
+            </label>
+            <select id="distrito" name="distrito" required disabled autocomplete="address-level3" aria-describedby="distrito-error">
+              <option value="">Seleccione un distrito</option>
+            </select>
             <span class="error-message" id="distrito-error" role="alert" aria-live="polite"></span>
           </div>
 
           <div class="form-group">
-            <label for="direccionExacta">Dirección exacta <span class="required" aria-hidden="true">*</span></label>
-            <textarea id="direccionExacta" name="direccionExacta" required minlength="10" maxlength="200" rows="3" placeholder="Dirección exacta" aria-describedby="direccionExacta-error"></textarea>
+            <label for="direccionExacta">
+              Dirección exacta
+              <span class="required" aria-hidden="true">*</span>
+              <span class="visually-hidden">campo requerido</span>
+            </label>
+            <textarea
+              id="direccionExacta"
+              name="direccionExacta"
+              required
+              minlength="10"
+              maxlength="200"
+              rows="3"
+              autocomplete="street-address"
+              placeholder="Detalle la dirección exacta"
+              aria-describedby="direccionExacta-help direccionExacta-error"
+            ></textarea>
+            <small id="direccionExacta-help" class="help-text">Máximo 200 caracteres.</small>
             <span class="error-message" id="direccionExacta-error" role="alert" aria-live="polite"></span>
           </div>
         </div>
@@ -244,33 +354,48 @@
 
         <div class="consent-text" aria-labelledby="consent-info">
           <p id="consent-info">
-            Los datos personales y documentos aquí proporcionados serán utilizados exclusivamente por Grupo Financiero CAFSA S.A. para la actualización de su información en nuestros sistemas, conforme con la normativa aplicable.
+            Los datos personales y documentos proporcionados serán utilizados exclusivamente por Grupo Financiero CAFSA S.A.
+            para la actualización de su información en nuestros sistemas, conforme a la normativa aplicable.
           </p>
           <ul>
-            <li>Su información será tratada de forma confidencial y almacenada de manera segura.</li>
-            <li>Declaro que la información proporcionada es verídica y autorizo su uso para los fines antes descritos.</li>
+            <li>La información será tratada de forma confidencial y almacenada mediante controles de seguridad razonables.</li>
+            <li>Declaro que la información proporcionada es verídica y autorizo su uso para los fines indicados.</li>
           </ul>
         </div>
 
         <div class="form-group form-group--checkbox">
-          <input type="checkbox" id="consentimiento" name="consentimiento" required aria-describedby="consentimiento-error">
-          <label for="consentimiento">Sí, autorizo y declaro. <span class="required" aria-hidden="true">*</span></label>
+          <input
+            type="checkbox"
+            id="consentimiento"
+            name="consentimiento"
+            required
+            aria-describedby="consentimiento-error"
+          >
+          <label for="consentimiento">
+            Sí, autorizo y declaro.
+            <span class="required" aria-hidden="true">*</span>
+            <span class="visually-hidden">campo requerido</span>
+          </label>
           <span class="error-message" id="consentimiento-error" role="alert" aria-live="polite"></span>
         </div>
       </fieldset>
 
       <div class="form-actions">
-        <div id="submitError" class="submit-error" hidden role="alert" aria-live="polite"></div>
-        <button type="submit" id="submitBtn" class="btn-submit">Enviar solicitud</button>
-        <div class="loading-indicator" id="loadingIndicator" hidden aria-live="polite">
+        <div id="submitError" class="submit-error" hidden role="alert" aria-live="assertive"></div>
+
+        <button type="submit" id="submitBtn" class="btn-submit">
+          Enviar solicitud
+        </button>
+
+        <div class="loading-indicator" id="loadingIndicator" hidden aria-live="polite" aria-busy="true">
           <span class="spinner" aria-hidden="true"></span>
           <span>Enviando solicitud...</span>
         </div>
       </div>
     </form>
 
-    <section id="confirmacion" class="confirmation" hidden aria-live="polite">
-      <h2>¡Solicitud enviada exitosamente!</h2>
+    <section id="confirmacion" class="confirmation" hidden aria-live="polite" aria-labelledby="confirmation-title">
+      <h2 id="confirmation-title">Solicitud enviada exitosamente</h2>
       <p>Sus datos se han almacenado correctamente.</p>
       <p>Su número de referencia es: <strong id="requestIdDisplay"></strong></p>
       <p>Guarde este número para futuras consultas.</p>

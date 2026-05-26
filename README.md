@@ -1,44 +1,59 @@
-# Formulario de Actualización de Datos - CAFSA
+# CAFSA-AWS-FORMUALRIO-SEC
 
-Proyecto web estático actualizado para publicación en AWS, con imagen corporativa CAFSA, tonalidad clara, mejoras de accesibilidad y controles iniciales de seguridad frontend.
+Proyecto actualizado del formulario de actualización de datos de Grupo Financiero CAFSA S.A.
 
-## Archivos principales
+## Qué incluye
 
-- `index.html`: estructura HTML del formulario.
-- `css/styles.css`: estilos claros, responsivos y accesibles.
-- `js/config.js`: configuración pública del endpoint del backend.
-- `js/app.js`: interacción del formulario, carga de PDF, validación básica y envío.
-- `assets/logo-cafsa.png`: logo institucional.
-- `customHttp.yml`: encabezados de seguridad para AWS Amplify Hosting.
-- `amplify.yml`: configuración simple de despliegue estático en Amplify.
-- `SEGURIDAD_AWS.md`: guía de seguridad y recomendaciones para publicación.
+- `index.html` modernizado y alineado a accesibilidad.
+- `css/styles.css` con tonalidad clara corporativa y logo CAFSA.
+- `js/app.js` integrado con validación, carga PDF, OCR/autocompletado, llenado manual y envío.
+- `js/location-data.js` con dinámica provincia/cantón/distrito.
+- `js/config.js` con configuración pública segura.
+- Pruebas Jest en `tests/`.
+- `customHttp.yml` y `amplify.yml` para AWS Amplify Hosting.
 
-## Confirmación sobre el error `file://`
+## Prueba local
 
-El error `Unsafe attempt to load URL file:///...` corresponde a ejecución local mediante doble clic sobre `index.html`. Para pruebas debe usarse un servidor local HTTP.
+No abra el archivo con doble clic porque `file://` limita el comportamiento del navegador. Ejecute:
 
-```bash
+```powershell
 python -m http.server 8080
 ```
 
-Abrir:
+Luego abra:
 
 ```text
 http://localhost:8080
 ```
 
-Al publicarse en AWS Amplify Hosting o CloudFront bajo HTTPS, ese error específico de `file://` no debería presentarse.
+## OCR / autocompletado
 
-## Publicación en AWS Amplify Hosting
+El archivo original `config.js` traía un endpoint de OCR directo con firma/token. En esta versión se dejó `OCR_SERVICE_URL` vacío por seguridad, porque el repositorio será público.
 
-1. Subir el contenido del proyecto al repositorio.
-2. Confirmar que `customHttp.yml` esté en la raíz.
-3. Confirmar que `amplify.yml` esté en la raíz si se usará despliegue CI/CD simple.
-4. Publicar desde Amplify Hosting.
-5. Configurar dominio oficial y certificado SSL/TLS.
-6. Ajustar `js/config.js` con el endpoint real HTTPS del backend.
-7. Ajustar `connect-src` en `customHttp.yml` al dominio real del API.
+Para que el autocompletado funcione en ambiente controlado debe configurarse un endpoint seguro, idealmente:
 
-## Nota importante
+```text
+Frontend: AWS Amplify Hosting o CloudFront
+Backend: API Gateway + Lambda
+OCR: Amazon Textract o proxy controlado hacia Power Automate
+Almacenamiento: S3 privado con cifrado
+```
 
-El frontend no debe contener secretos, tokens ni credenciales. La recepción y almacenamiento de cédulas/documentos debe implementarse mediante backend seguro en AWS.
+## Publicación en AWS Amplify
+
+1. Suba el proyecto a GitHub.
+2. En AWS Amplify, conecte el repositorio.
+3. Seleccione la rama correspondiente.
+4. Amplify leerá `amplify.yml`.
+5. Configure encabezados con `customHttp.yml`.
+
+## Pruebas
+
+```powershell
+npm install
+npm test
+```
+
+## Seguridad
+
+No publique tokens, firmas de Power Automate, llaves AWS, SAS tokens ni credenciales dentro de `config.js`.

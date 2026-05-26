@@ -1,0 +1,21 @@
+{
+  "name": "cafsa-aws-formulario-sec",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Formulario de actualización de datos CAFSA preparado para AWS Amplify/CloudFront.",
+  "scripts": {
+    "test": "jest",
+    "check:js": "node --check js/app.js && node --check js/config.js && node --check js/location-data.js",
+    "start": "python -m http.server 8080"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ]
+  }
+}

@@ -1,9 +1,12 @@
 version: 1
 frontend:
   phases:
+    preBuild:
+      commands:
+        - echo "Static site - no build step"
     build:
       commands:
-        - echo "Sitio estático CAFSA - sin proceso de compilación"
+        - echo "Ready to deploy"
   artifacts:
     baseDirectory: .
     files:
