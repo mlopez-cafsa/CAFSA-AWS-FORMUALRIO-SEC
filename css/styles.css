@@ -311,8 +311,26 @@
     gap: var(--space-xs);
   }
 
-  .form-group + .form-group {
+  /* Alineación por bloques:
+     - Los grupos apilados directamente conservan separación vertical.
+     - Los grupos dentro de .form-grid no reciben margen superior, para que
+       las columnas inicien exactamente a la misma altura. */
+  fieldset > .form-group + .form-group,
+  fieldset > .form-group + .form-grid,
+  fieldset > .form-grid + .form-group,
+  fieldset > .consent-text + .form-group,
+  .ocr-status + .ocr-error {
     margin-block-start: var(--space-lg);
+  }
+
+  .form-grid + .form-grid {
+    margin-block-start: var(--space-lg);
+  }
+
+  .form-grid > .form-group,
+  .form-grid > .form-group + .form-group {
+    margin-block-start: 0;
+    align-self: start;
   }
 
   label {
@@ -470,10 +488,24 @@
     border-color: var(--color-primary);
   }
 
+  /* Estado posterior a la carga de un PDF válido.
+     Solo se aplica al recuadro de adjuntar cédula, no al bloque completo. */
   .file-upload-area.has-file {
-    background: #f9fbfd;
-    border-color: var(--color-autofill-border);
+    color: #245c3a;
+    background: #f7fbf8;
+    border-color: #8ebf9e;
     border-style: solid;
+    box-shadow: inset 0 0 0 1px #cfe5d6;
+    transform: none;
+  }
+
+  .file-upload-area.has-file .file-upload-icon,
+  .file-upload-area.has-file .file-upload-link {
+    color: #245c3a;
+  }
+
+  .file-upload-area.has-file .file-upload-hint {
+    color: #4f6f5c;
   }
 
   .file-upload-icon {
