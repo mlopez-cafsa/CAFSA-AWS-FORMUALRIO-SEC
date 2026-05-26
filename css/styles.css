@@ -873,3 +873,21 @@
     }
   }
 }
+
+
+body {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 2rem 1rem;
+}
+
+/* Mantener el ancho del contenedor */
+#app.app-shell {
+  width: min(100%, 52rem);
+}
+
+/* Cuando se habilita/muestra el formulario, sube el contenido */
+body:has(#solicitudForm:not([hidden])) {
+  place-items: start center;
+}
