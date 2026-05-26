@@ -214,6 +214,7 @@
     inline-size: min(32rem, 92vw);
     block-size: auto;
     object-fit: contain;
+    /* margin-right: 10%; */
   }
 
   .eyebrow {
